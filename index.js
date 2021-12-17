@@ -16,6 +16,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 require('./routes/testroute')(app);
 
 //
-app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
+app.listen(process.env.PORT || port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
     console.log(`Now listening on port ${port}`); 
 });
