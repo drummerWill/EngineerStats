@@ -6,6 +6,6 @@ console.log(engineers)
 
 module.exports = function(app){
     app.get('/test', function(req, res){
-        res.json("it worked")
+        res.json(engineers)
     })
 }

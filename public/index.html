@@ -42,9 +42,13 @@
               <div v-if="showHello">
                   <h1>Hello Viewer!!!!</h1>
     
-            </div>
+            </div> 
             <div v-if="showImage">
-                <img src="https://i.imgur.com/1aEAzTG.jpeg" alt="Trulli" width="500" height="333">
+                <ul>
+                    <li v-for="engineer in engineers"> 
+                        {{engineer.FirstName}}
+                    </li>
+                </ul>
             </div>
         </body>
         <footer>

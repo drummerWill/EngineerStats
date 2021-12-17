@@ -5,9 +5,10 @@ var app = new Vue({
     data () {
       return {
         showCount: false,
-        showHello: true,
-        showImage: false,
-        count: 0
+        showHello: false,
+        showImage: true,
+        count: 0,
+        engineers:[]
       }
     },
     methods:{
@@ -22,7 +23,8 @@ var app = new Vue({
       let self = this
       axios.get('/test')
         .then(response => {
-            console.log(response)
+            debugger;
+            self.engineers=response.data
         });
     },
   })
