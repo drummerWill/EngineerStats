@@ -3,7 +3,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 <link rel="stylesheet" href="headers.css">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <!DOCTYPE html>
@@ -19,12 +19,12 @@
                 <div class="topnav">
            
                     <div class="topnav-centered">
-                      <a  v-on:click="showHello = true" class="active">Home</a>
+                      <a  v-on:click="changeToChart()" class="active">Chart</a>
                     </div>
                   
                    
-                    <a v-on:click="showCount = true">News</a>
-                    <a v-on:click="changeToImage()">Contact</a>
+                    <a v-on:click="changeToMap()">Map</a>
+                    <a v-on:click="changeToStats()">Stats</a>
                   
                 
                     <div class="topnav-right">
@@ -36,14 +36,16 @@
             </header>
        
         <body >
-            <div v-if="showCount "style="min-height: 300px;">
-                <button v-on:click="count++">You clicked me {{ count }} times.</button>
+            <div v-if="showChart "style="min-height: 300px;">
+                <div>
+                    <canvas id="myChart"></canvas>
+                  </div>
               </div>
-              <div v-if="showHello">
+              <div v-if="showMap">
                   <h1>Hello Viewer!!!!</h1>
     
             </div> 
-            <div v-if="showImage">
+            <div v-if="showStats">
                 <ul>
                     <li v-for="engineer in engineers"> 
                         {{engineer.FirstName}}
