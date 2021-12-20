@@ -4,7 +4,14 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 <link rel="stylesheet" href="headers.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script src="leaflet-heat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,16 +43,16 @@
             </header>
        
         <body >
-            <div v-if="showChart "style="min-height: 300px;">
+            <div v-show="showChart "style="min-height: 300px;">
                 <div>
                     <canvas id="myChart"></canvas>
                   </div>
               </div>
-              <div v-if="showMap">
-                  <h1>Hello Viewer!!!!</h1>
+              <div v-show="showMap">
+                <div id="map"></div>
     
             </div> 
-            <div v-if="showStats">
+            <div v-show="showStats">
                 <ul>
                     <li v-for="engineer in engineers"> 
                         {{engineer.FirstName}}
@@ -63,4 +70,5 @@
 </html>
 
 
+<script src="scripts/helpers.js"></script>
 <script src="scripts/main.js"></script>
