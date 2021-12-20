@@ -5,10 +5,13 @@ var app = new Vue({
     data () {
       return {
         showChart: false,
-        showMap: true,
-        showStats: false,
+        showMap: false,
+        showStats: true,
         count: 0,
-        engineers:[]
+        engineers:[],
+        heats: null,
+        heatsLoaded:false,
+        map: {}
       }
     },
     methods:{
@@ -27,42 +30,50 @@ var app = new Vue({
         this.showStats = false;
         this.showChart = false;
         this.showMap = true;
+       
+      },
+      loadMap(){
+          var map = L.map('map').setView([32, -96], 4);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+          }).addTo(map);
+          debugger;
+          var theHeats = L.heatLayer(this.heats, {radius: 10, blur: 1}).addTo(map)
+          this.heatsLoaded = true
+        
       }
     },
     mounted () {
-      let self = this
-      var map = L.map('map').setView([32, -96], 4);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-      }).addTo(map);
+      let self = this     
       axios.get('/test')
         .then(response => {
         
             self.engineers=response.data
             eng = self.engineers
-            let [times, numbers] = getTimeSeries(eng)
-            labels = times
+            let [times, numbers, xyseries] = getTimeSeries(eng)
+            debugger;
             const ctx = document.getElementById('myChart');
             const chart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels,
-                datasets: [{
-                  label: '# of Votes',
-                  data: numbers,
-                  borderWidth: 1
-                }]
-              },
-              options: {}
+              type: 'scatter',
+            data: {datasets:[{label: "Test",
+          data: xyseries}]},
+            options: {
+              scales: {
+                x: {
+                  type: 'linear',
+                  position: 'bottom'
+                }
+              }
+            }
             });
             heats = [];
             eng.forEach(engineer => {
               if (engineer.Lat)
                 heats.push([engineer.Lat, engineer.Long,1])
             });
-            
-            var heat = L.heatLayer(heats, {radius: 10, blur: 1}).addTo(map);
+            this.map = map
+            this.heats = heats 
         });
     },
   })
