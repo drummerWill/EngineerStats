@@ -42,15 +42,38 @@ var app = new Vue({
           var theHeats = L.heatLayer(this.heats, {radius: 10, blur: 1}).addTo(map)
           this.heatsLoaded = true
         
-      }
+      },
+      renderPieChart(groups){
+        let labels = Object.keys(groups)
+        let data = Object.values(groups)
+        new Chart(document.getElementById("pie-chart"), {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: "Population (millions)",
+              data: data
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Predicted world population (millions) in 2050'
+            }
+          }
+      });
+      },
     },
     mounted () {
       let self = this     
       axios.get('/test')
         .then(response => {
-        
+            
             self.engineers=response.data
             eng = self.engineers
+            groups = getGroups(eng)
+            this.renderPieChart(groups)
+            console.log(groups)
             let [times, numbers, xyseries] = getTimeSeries(eng)
             debugger;
             const ctx = document.getElementById('myChart');

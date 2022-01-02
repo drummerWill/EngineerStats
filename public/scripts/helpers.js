@@ -1,3 +1,18 @@
+function getGroups(engineers){
+    let res = {}
+    debugger;
+    engineers.forEach(eng => {
+        if (Object.keys(res).includes(eng.Branch)){
+            res[eng.Branch] = res[eng.Branch] + 1
+        } 
+        else{
+            res[eng.Branch] = 1
+        }
+    });
+    return res
+}
+
+
 function getTimeSeries(engineers){
     engineers.sort((a,b) => {
         let engineerA = new Date(a.DateGranted).getYear()
