@@ -20,16 +20,50 @@ function genericGrouper(engineers, property){
 function otherTimeSeries(engineers){
     let series = []
     engineers.forEach(engineer => {
-        series.push({x:engineer.DateGranted.replaceAll('/', "-"),y:engineer.PeNumber})
+        let engineerDate = new Date(engineer.DateGranted)
+        let dateGranted = engineerDate.toISOString().substring(0,10);
+        series.push({x:dateGranted,y:engineer.PeNumber})
     });
     return series
 }
 
 
+function numberTimeSeries(engineers){
+    engineers.sort((a,b) => {
+        let engineerA = new Date(a.DateGranted)
+        let engineerB = new Date(b.DateGranted)
+        return engineerA > engineerB ? 1: -1
+    });
+    let xyseries = []
+    let year = 0
+    let prevEngineer = 0
+    let prevEngineerDate = 0
+    engineers.forEach(engineer => {
+        let engineerDate = new Date(engineer.DateGranted)
+        let engineerYear = engineerDate.getYear()
+    
+        if (year == 0)
+        {
+            year = engineerYear
+        }
+        
+        if (engineerYear != year)
+        {
+            xyseries.push({x: prevEngineerDate, y:prevEngineer.PeNumber})
+            year = engineerYear
+        }
+        // if engineer is last 
+        prevEngineer = engineer
+        prevEngineerDate = engineerDate.toISOString().substring(0,10);
+    });
+    return xyseries
+}
+
+
 function getTimeSeries(engineers){
     engineers.sort((a,b) => {
-        let engineerA = new Date(a.DateGranted).getYear()
-        let engineerB = new Date(b.DateGranted).getYear()
+        let engineerA = new Date(a.DateGranted)
+        let engineerB = new Date(b.DateGranted)
         return engineerA > engineerB ? 1: -1
     });
     let xyseries = []
@@ -40,6 +74,7 @@ function getTimeSeries(engineers){
     let inThisYear = 0
     let i = 0
     let prevEngineer = 0
+    let prevEngineerDate = 0
     engineers.forEach(engineer => {
         let engineerDate = new Date(engineer.DateGranted)
         let engineerYear = engineerDate.getYear()
@@ -56,13 +91,17 @@ function getTimeSeries(engineers){
         }
         else
         {
-            xyseries.push({x: prevEngineer, y:inThisYear})
+            xyseries.push({x: prevEngineerDate, y:inThisYear})
             times.push(prevEngineer)
             numbers.push(inThisYear)
             year = engineerYear
             inThisYear++;
         }
-        prevEngineer = engineerYear
+
+        // if engineer is last 
+        prevEngineerDate = engineerDate.toISOString().substring(0,10);
+
+        prevEngineer = engineer
         
     });
     return [times, numbers, xyseries]

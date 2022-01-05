@@ -87,13 +87,16 @@ var app = new Vue({
             this.renderPieChart(groups)
             console.log(groups)
             let [times, numbers, xyseries] = getTimeSeries(eng)
-            debugger;
             const ctx = document.getElementById('myChart');
             let timeseries = otherTimeSeries(eng)
-            debugger;
+            let numberseries = numberTimeSeries(eng)
+            console.log(timeseries)
             const chart = new Chart(ctx, {
-              type: 'line',
-            data: timeseries,
+              type: 'scatter',
+            data: {datasets:[{label: "Test",
+             data: xyseries},
+             {label: "Test 2 ",
+             data: numberseries}]},
             options: {
               scales: {
                 x: {
