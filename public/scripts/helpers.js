@@ -13,6 +13,19 @@ function getGroups(engineers){
 }
 
 
+function genericGrouper(engineers, property){
+
+}
+
+function otherTimeSeries(engineers){
+    let series = []
+    engineers.forEach(engineer => {
+        series.push({x:engineer.DateGranted.replaceAll('/', "-"),y:engineer.PeNumber})
+    });
+    return series
+}
+
+
 function getTimeSeries(engineers){
     engineers.sort((a,b) => {
         let engineerA = new Date(a.DateGranted).getYear()
