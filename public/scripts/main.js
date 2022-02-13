@@ -83,7 +83,7 @@ var app = new Vue({
             
             self.engineers=response.data
             eng = self.engineers
-            groups = getGroups(eng)
+            groups = genericGrouper(eng, "Country")
             this.renderPieChart(groups)
             console.log(groups)
             let [times, numbers, xyseries] = getTimeSeries(eng)

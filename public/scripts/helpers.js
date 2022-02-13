@@ -1,6 +1,5 @@
 function getGroups(engineers){
     let res = {}
-    debugger;
     engineers.forEach(eng => {
         if (Object.keys(res).includes(eng.Branch)){
             res[eng.Branch] = res[eng.Branch] + 1
@@ -12,9 +11,23 @@ function getGroups(engineers){
     return res
 }
 
-
+// return something that can be presented. Over time??? Simple pie or bar chart easiest.
+// return something presentable. item: amount.
 function genericGrouper(engineers, property){
+    let groups = {} 
 
+    
+    engineers.forEach(engineer => {
+        let engProp = engineer[property]
+        if (Object.keys(groups).includes(engProp)){
+            groups[engProp] = groups[engProp] + 1
+        } 
+        else{
+            groups[engProp] = 1
+        }
+    });
+
+    return groups;
 }
 
 function otherTimeSeries(engineers){
