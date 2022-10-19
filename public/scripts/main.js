@@ -77,24 +77,7 @@ var app = new Vue({
       },
     },
     mounted () {
-      let self = this
-      axios.get('/latlong')
-        .then(response => {
-          latlong = response.data;
-          heats = [];
-          latlong.forEach(engineer => {
-            if (engineer.lat)
-              heats.push([engineer.lat, engineer.log,1])
-          });
-          
-          // eng.forEach(engineer => {
-          //   if (engineer.Lat)
-          //     heats.push([engineer.Lat, engineer.Long,1])
-          // });
-          this.map = map
-          this.heats = heats 
-
-        });     
+      let self = this     
       axios.get('/test')
         .then(response => {
             
@@ -138,7 +121,13 @@ var app = new Vue({
           //     }
           //   }
           //   });
-           
+            heats = [];
+            eng.forEach(engineer => {
+              if (engineer.Lat)
+                heats.push([engineer.Lat, engineer.Long,1])
+            });
+            this.map = map
+            this.heats = heats 
         });
     },
   })

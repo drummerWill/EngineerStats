@@ -14,7 +14,6 @@ app.use(express.static('public', {extensions:['html']})).use(cors())
 .use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 require('./routes/testroute')(app);
-require('./routes/latlongroute')(app);
 
 //
 app.listen(process.env.PORT || port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
