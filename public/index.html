@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 <link rel="stylesheet" href="headers.css">
 <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
@@ -27,42 +28,43 @@ crossorigin=""></script>
             <header>
                 <div class="topnav">
            
-                    <div class="topnav-centered">
-                      <a  v-on:click="changeToChart()" class="active">Chart</a>
-                    </div>
-                  
                    
+                    <a  v-on:click="changeToChart()" class="active">Chart</a>
                     <a v-on:click="changeToMap()">Map</a>
                     <a v-on:click="changeToStats()">Stats</a>
                   
                 
                     <div class="topnav-right">
-                      <a href="#search">Search</a>
-                      <a href="#about">About</a>
+                      <a v-on:click="changeToAbout()">About</a>
                     </div>
                   
                   </div>
             </header>
        
         <body >
+            <div class="mainPage">
             <div v-show="showChart "style="min-height: 300px;">
                 <div>
                     <canvas id="myChart"></canvas>
                   </div>
               </div>
               <div v-show="showMap">
+                <button v-show="!heatsLoaded" v-on:click="loadMap()">Load Map</button>
                 <div id="map"></div>
-                <button v-on:click="loadMap()">Load Map</button>
-    
             </div> 
             <div v-show="showStats">
                 <div>
                     <canvas id="pie-chart"></canvas>
                   </div>
             </div>
+            <div v-show="showAbout">
+                <div>
+                    Created By William
+                </div>
+            </div>
+        </div>
         </body>
         <footer>
-            <p>William's website.</p>
         </footer>
          
 

@@ -2,8 +2,16 @@
 .topnav {
     position: relative;
     overflow: hidden;
+    /* background-color:gray */
+
   }
-  
+
+body{
+  /* background-color: green; */
+}
+.mainPage {
+  /* background-color: white; */
+}
   /* Style the links inside the navigation bar */
   .topnav a {
     float: left;
@@ -12,7 +20,12 @@
     text-decoration: none;
     font-size: 17px;
   }
-  
+  .header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color:gray
+  }
 
   #map { height:480px; }
 

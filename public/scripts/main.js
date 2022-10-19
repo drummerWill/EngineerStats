@@ -7,6 +7,7 @@ var app = new Vue({
         showChart: false,
         showMap: false,
         showStats: true,
+        showAbout: false,
         count: 0,
         engineers:[],
         heats: null,
@@ -19,18 +20,28 @@ var app = new Vue({
         this.showStats = true;
         this.showChart = false;
         this.showMap = false;
+        this.showAbout = false;
       },
       changeToChart(){
         this.showStats = false;
         this.showChart = true;
         this.showMap = false;
-        
+        this.showAbout = false;
+
         },
       changeToMap(){
         this.showStats = false;
         this.showChart = false;
         this.showMap = true;
-       
+        this.showAbout = false;
+
+      },
+      changeToAbout(){
+        this.showStats = false;
+        this.showChart = false;
+        this.showMap = false;
+        this.showAbout = true;
+
       },
       loadMap(){
           var map = L.map('map').setView([32, -96], 4);
@@ -38,7 +49,7 @@ var app = new Vue({
             maxZoom: 19,
             attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
           }).addTo(map);
-          debugger;
+          map.maxZoom = 1;
           var theHeats = L.heatLayer(this.heats, {radius: 10, blur: 1}).addTo(map)
           this.heatsLoaded = true
         
@@ -57,6 +68,22 @@ var app = new Vue({
           "#fab1a0","#ff7675","#fd79a8","#fdcb6e","#e17055",
           "#d63031","#feca57","#5f27cd","#54a0ff","#01a3a4"
       ]
+
+      var dynamicColors = function() {
+        var r = Math.round(Math.floor(Math.random() * 255));
+        var g = Math.round(Math.floor(Math.random() * 255));
+        var b =Math.round(Math.floor(Math.random() * 255));
+        return "rgb(" + r + "," + g + "," + b + ")";
+     };
+
+      var selectedColors = []
+
+      for (let index = 0; index < labels.length; index++) {
+        selectedColors.push(dynamicColors());
+        
+      }
+      debugger;
+
         new Chart(document.getElementById("pie-chart"), {
           type: 'pie',
           data: {
@@ -64,7 +91,7 @@ var app = new Vue({
             datasets: [{
               label: "Population (millions)",
               data: data,
-              backgroundcolor: colorScheme
+              backgroundColor: colorScheme
             }]
           },
           options: {
@@ -83,7 +110,7 @@ var app = new Vue({
             
             self.engineers=response.data
             eng = self.engineers
-            groups = genericGrouper(eng, "Country")
+            groups = genericGrouper(eng, "Branch")
             this.renderPieChart(groups)
             console.log(groups)
             let [times, numbers, xyseries] = getTimeSeries(eng)
